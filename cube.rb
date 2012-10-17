@@ -95,7 +95,15 @@ module Cube
 
   def self.pp(cube)
     for i in 0..cube.length/3-1
-      puts cube[i*3..(i*3+2)]
+      if [3, 4, 6, 7, 9, 10].include?(i)
+        print cube[i*3..(i*3+2)]
+      else
+        if [5, 8, 11].include?(i)
+          puts cube[i*3..(i*3+2)]
+        else
+          puts '   ' + cube[i*3..(i*3+2)]
+        end
+      end
     end
   end
 
