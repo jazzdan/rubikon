@@ -25,9 +25,6 @@ if __FILE__ == $0
         #csv << Cube.corners(Cube.rotate180(initial_state, face)).unshift(depth)
 
         while !stack.empty?
-          puts stack.empty?
-          puts depth
-          puts face
           state = stack.pop
 
           clockwised_state = Cube.rotateClockwise(state, face)
@@ -42,6 +39,8 @@ if __FILE__ == $0
           csv << Cube.corners(flipped_state).unshift(depth)
 
         end
+
+        puts "Escaped!"
 
         stack = temp_stack
 
