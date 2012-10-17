@@ -1,6 +1,6 @@
 module Encoder
 
-  CONVERSION = ["GRW", "BRW", "GRY", "BRY", "GOY", "BOY", "GOW", "BOW"]
+  CONVERSION = ['GRW', 'BRW', 'GRY', 'BRY', 'GOY', 'BOY', 'GOW', 'BOW']
 
   def self.encode(corners)
     Integer(corners.map { |corner| CONVERSION.index(corner).to_s }.join, 8)
@@ -11,7 +11,7 @@ module Encoder
     while s.size < 8
       s = '0' + s
     end
-    s.split("").map { |corner| CONVERSION[Integer(corner)] }
+    s.split('').map { |corner| CONVERSION[Integer(corner)] }
   end
 
 
