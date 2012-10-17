@@ -107,40 +107,43 @@ module Cube
     end
   end
 
-  def self.rotate(str, repeat=1)
+  def self.rotate!(str, repeat=1)
     arr = str.split("")
     repeat.times { arr.unshift(arr.pop) }
     arr.join
   end
 
-  def self.rotateSide(arr, repeat=1)
+  def self.rotateSide!(arr, repeat=1)
     repeat.times { arr.unshift(arr.pop) }
     arr
   end
 
-  def self.rotate180!(cube, face_id)
-    self.rotateClockwise!(
-      self.rotateClockwise!(cube, face_id),
+  def self.rotate180(cube, face_id)
+    cube = '' + cube
+    self.rotateClockwise(
+      self.rotateClockwise(cube, face_id),
       face_id
     )
   end
 
-  def self.rotateClockwise!(cube, face_id)
+  def self.rotateClockwise(cube, face_id)
+    cube = '' + cube
     # rotate the face
-    face = self.rotate(self.face(cube, face_id), 3)
+    face = self.rotate!(self.face(cube, face_id), 3)
     cube = self.set(cube, FACES[face_id], face)
 
     # rotate the sides
-    sides = self.rotateSide(self.sides(cube, face_id))
+    sides = self.rotateSide!(self.sides(cube, face_id))
     sides.each_with_index do |side, i|
       cube = self.set(cube, SIDES[face_id][i], side)
     end
     cube
   end
 
-  def self.rotateCounterClockwise!(cube, face_id)
-    self.rotate180!(
-      self.rotateClockwise!(cube, face_id),
+  def self.rotateCounterClockwise(cube, face_id)
+    cube = '' + cube
+    self.rotate180(
+      self.rotateClockwise(cube, face_id),
       face_id
     )
   end
