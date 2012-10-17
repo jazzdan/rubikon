@@ -66,12 +66,12 @@ module Cube
   }
 
   def self.corner(cube, i)
-    self.get(cube, CORNERS[i])
+    self.get_a(cube, CORNERS[i]).sort.join
   end
 
   def self.corners(cube)
     CORNERS.map do |corner|
-      self.get(cube, corner)
+      self.get_a(cube, corner).sort.join
     end
   end
 
@@ -90,7 +90,11 @@ module Cube
   end
 
   def self.get(cube, ids)
-    ids.map {|i| cube[i]}.join
+    self.get_a(cube, ids).join
+  end
+
+  def self.get_a(cube, ids)
+    ids.map {|i| cube[i]}
   end
 
   def self.pp(cube)
