@@ -107,13 +107,6 @@ module Cube
     end
   end
 
-  def self.set(cube, ids, to)
-    ids.each_with_index do |loc, i|
-      cube[loc] = to[i]
-    end
-    cube
-  end
-
   def self.rotate(str, repeat=1)
     arr = str.split("")
     repeat.times { arr.unshift(arr.pop) }
@@ -125,6 +118,13 @@ module Cube
     arr
   end
 
+  def self.rotate180(cube, face_id)
+    self.rotateClockwise(
+      self.rotateClockwise(cube, face_id),
+      face_id
+    )
+  end
+
   def self.rotateClockwise(cube, face_id)
     # rotate the face
     face = self.rotate(self.face(cube, face_id), 3)
@@ -134,6 +134,20 @@ module Cube
     sides = self.rotateSide(self.sides(cube, face_id))
     sides.each_with_index do |side, i|
       cube = self.set(cube, SIDES[face_id][i], side)
+    end
+    cube
+  end
+
+  def self.rotateCounterClockwise(cube, face_id)
+    self.rotate180(
+      self.rotateClockwise(cube, face_id),
+      face_id
+    )
+  end
+
+  def self.set(cube, ids, to)
+    ids.each_with_index do |loc, i|
+      cube[loc] = to[i]
     end
     cube
   end
