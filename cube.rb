@@ -5,18 +5,18 @@ RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW
 
 or
 
-RRR
-RRR
-RRR
+   RRR
+   RRR
+   RRR
 GGGYYYBBB
 GGGYYYBBB
 GGGYYYBBB
-OOO
-OOO
-OOO
-WWW
-WWW
-WWW
+   OOO
+   OOO
+   OOO
+   WWW
+   WWW
+   WWW
 =end
 
 module Cube
@@ -118,14 +118,14 @@ module Cube
     arr
   end
 
-  def self.rotate180(cube, face_id)
-    self.rotateClockwise(
-      self.rotateClockwise(cube, face_id),
+  def self.rotate180!(cube, face_id)
+    self.rotateClockwise!(
+      self.rotateClockwise!(cube, face_id),
       face_id
     )
   end
 
-  def self.rotateClockwise(cube, face_id)
+  def self.rotateClockwise!(cube, face_id)
     # rotate the face
     face = self.rotate(self.face(cube, face_id), 3)
     cube = self.set(cube, FACES[face_id], face)
@@ -138,9 +138,9 @@ module Cube
     cube
   end
 
-  def self.rotateCounterClockwise(cube, face_id)
-    self.rotate180(
-      self.rotateClockwise(cube, face_id),
+  def self.rotateCounterClockwise!(cube, face_id)
+    self.rotate180!(
+      self.rotateClockwise!(cube, face_id),
       face_id
     )
   end
