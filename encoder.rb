@@ -1,4 +1,4 @@
-module Encoder
+module CornerEncoder
 
   CONVERSION = ['GRW', 'BRW', 'GRY', 'BRY', 'GOY', 'BOY', 'GOW', 'BOW']
 
@@ -14,5 +14,28 @@ module Encoder
     s.split('').map { |corner| CONVERSION[Integer(corner)] }
   end
 
+end
+
+module CubeEncoder
+
+  CONVERSION = []
+
+  def self.encode(cube)
+  end
+
+  def self.decode(key)
+  end
+
+end
+
+module EdgeEncoder
+
+  CONVERSION = []
+
+  def self.encode(edges)
+  end
+
+  def self.decode(key)
+  end
 
 end
