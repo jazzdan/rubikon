@@ -47,24 +47,41 @@ module Cube
     [43, 46]
   ]
 
-  def self.corner(cube, i) {
-    CORNERS[i].map {|i| cube[i]}.join
+  FACES = {
+    'R' => 0..8,
+    'G' => [9, 10, 11, 18, 19, 20, 27, 28, 29],
+    'Y' => [12, 13, 14, 21, 22, 23, 30, 31, 32],
+    'B' => [15, 16, 17, 24, 25, 26, 33, 34, 35],
+    'O' => 36..44,
+    'W' => 45..53
+  }
+
+  def self.corner(cube, i)
+    self.get(cube, CORNERS[i])
   end
 
   def self.corners(cube)
     CORNERS.map do |corner|
-      corner.map {|i| cube[i]}.join
+      self.get(cube, corner)
     end
   end
 
-  def self.edge(cube, i) {
-    EDGES[i].map {|i| cube[i]}.join
+  def self.edge(cube, i)
+    self.get(cube, EDGES[i])
   end
 
   def self.edges(cube)
-    EDGES.map do |corner|
-      corner.map {|i| cube[i]}.join
+    EDGES.map do |edge|
+      self.get(cube, edge)
     end
+  end
+
+  def self.face(cube, side)
+    self.get(cube, FACES[side])
+  end
+
+  def self.get(cube, ids)
+    ids.map {|i| cube[i]}.join
   end
 
 end
