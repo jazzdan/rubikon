@@ -6,7 +6,7 @@ module CornerEncoder
     begin
       Integer(corners.map { |corner| CONVERSION.index(corner).to_s }.join, 8)
     rescue
-      puts 'CornderEncoder.encode: SHIIITTT - ' + corners.to_s
+      # puts 'CornderEncoder.encode: SHIIITTT - ' + corners.to_s
     end
   end
 

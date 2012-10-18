@@ -5,6 +5,8 @@ require 'csv'
 
 initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 
+errors = 0
+
 if __FILE__ == $0
   states = Array.new(16_434_824)
   states[CornerEncoder.encode(Cube.corners(initial_state))] = :done
@@ -12,7 +14,7 @@ if __FILE__ == $0
   depth = 1
   temp = Array[]
 
-  while depth < 8
+  while depth < 4
 
     previous.each do |current|
       current_key = CornerEncoder.encode(Cube.corners(current))
@@ -31,6 +33,17 @@ if __FILE__ == $0
             end
             temp.push(state)
           rescue
+            #puts
+            puts
+            puts 'action: ' + ['180', 'CW', 'CCW'][i]
+            puts ' depth: ' + depth.to_s
+            puts '  face: ' + face
+            puts 'origin: ' + current
+            puts ' state: ' + state
+            puts
+            #Cube.pp(state)
+            #puts
+            errors += 1
           end
         end
       end
@@ -40,5 +53,8 @@ if __FILE__ == $0
     temp = []
     depth += 1
   end
+
+  puts
+  puts errors.to_s + ' ERRORS'
 
 end

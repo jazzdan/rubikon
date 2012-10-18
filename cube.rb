@@ -57,12 +57,12 @@ module Cube
   }
 
   SIDES = {
-    'R' => [51..53, 15..17, 12..14, 9..11],
-    'G' => [[0, 3, 6], [12, 21, 30], [36, 39, 42], [45, 48, 51]],
-    'Y' => [6..8, [15, 24, 33], 36..38, [11, 20, 29]],
-    'B' => [[2, 5, 8], [47, 50, 53], [38, 41, 44], [14, 23, 32]],
-    'O' => [30..32, 33..35, 45..47, 27..29],
-    'W' => [42..44, [17, 26, 35], 0..2, [9, 10, 11]]
+    'R' => [51, 52, 53, 17, 16, 15, 14, 13, 12, 11, 10, 9],
+    'G' => [0, 3, 6, 12, 21, 30, 36, 39, 42, 45, 48, 51],
+    'Y' => [6, 7, 8, 15, 24, 33, 38, 37, 36, 29, 20, 11],
+    'B' => [8, 5, 2, 53, 50, 47, 44, 41, 38, 32, 23, 14],
+    'O' => [30, 31, 32, 33, 34, 35, 47, 46, 45, 27, 28, 29],
+    'W' => [42, 43, 44, 35, 26, 17, 2, 1, 0, 9, 18, 27]
   }
 
   def self.corner(cube, i)
@@ -111,17 +111,12 @@ module Cube
     end
   end
 
-  def self.rotate!(str, repeat=1)
+  def self.rotate!(str, repeat=2)
     arr = str.split("")
     repeat.times do
       arr.unshift(arr.pop)
     end
     arr.join
-  end
-
-  def self.rotateSide!(arr, repeat=1)
-    repeat.times { arr.unshift(arr.pop) }
-    arr
   end
 
   def self.rotate180(cube, face_id)
@@ -134,14 +129,12 @@ module Cube
 
   def self.rotateClockwise(cube, face_id)
     cube = '' + cube
-    face = self.rotate!(self.face(cube, face_id), 2)
+    face = self.rotate!(self.face(cube, face_id))
     cube = self.set(cube, FACES[face_id], face)
 
     # rotate the sides
-    sides = self.rotateSide!(self.sides(cube, face_id))
-    sides.each_with_index do |side, i|
-      cube = self.set(cube, SIDES[face_id][i], side)
-    end
+    sides = self.rotate!(self.sides(cube, face_id), 3)
+    cube = self.set(cube, SIDES[face_id], sides)
     cube
   end
 
@@ -160,14 +153,8 @@ module Cube
     cube
   end
 
-  def self.side(cube, face, side)
-    self.get(cube, SIDES[face][side])
-  end
-
   def self.sides(cube, face)
-    SIDES[face].map do |side|
-      self.get(cube, side)
-    end
+    self.get(cube, SIDES[face])
   end
 
   def self.count_valid(state)
