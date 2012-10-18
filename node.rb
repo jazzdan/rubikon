@@ -9,6 +9,10 @@ class Node
     @children
   end
 
+  def depth
+    @depth
+  end
+
   def direction
     @direction
   end
@@ -17,15 +21,15 @@ class Node
     @children = []
     Cube::FACES.keys.each do |face|
       state = Cube.rotateClockwise(@state, face)
-      @children.push Node.new(state, self, face + '1')
+      @children.push Node.new(state, self, @depth + 1, face + '1')
 
       state = Cube.rotateClockwise(Cube.rotateClockwise(state, face), face)
-      @children.push Node.new(state, self, face + '3')
+      @children.push Node.new(state, self, @depth + 1, face + '3')
     end
   end
 
-  def h(g)
-    g + Heuristic.fetch(@state)
+  def h()
+    @depth + Heuristic.fetch(@state)
   end
 
   def key
@@ -35,8 +39,9 @@ class Node
     return (corner + edge_a + edge_b).to_i
   end
 
-  def initialize(state, parent, direction)
+  def initialize(state, parent, depth, direction)
     @children = nil
+    @depth = depth
     @direction = direction
     @parent = parent
     @state = state

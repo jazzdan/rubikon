@@ -8,20 +8,22 @@ module Astar
 
   def self.search(start)
 
-    moves = 0
-    start_node = Node.new(start, :goal, :goal)
+    limit = 5
+    start_node = Node.new(start, :goal, 0, :goal)
 
     closed = {}
     open = PQ.new
-    open.add(start_node.h(moves), start_node)
+    open.add(start_node.h, start_node)
 
     while !open.empty?
       current = open.next
-      puts 'checking... ' + current.key.to_s
+      # puts 'state: ' + current.state
+      puts 'h() = ' + current.h.to_s
+      puts 'd   = ' + current.depth.to_s
       if current.state == Cube::GOAL
-        # TODO: output the path
-        puts 'we win'
         puts
+        puts 'Solution: '
+        puts '========================================================='
         n = current
         while n != :goal
           if n.direction != :goal
@@ -29,15 +31,16 @@ module Astar
           end
           n = n.parent
         end
+        puts
+        puts
         return
       end
 
+      children = current.children.sort {|child| child.h}
       closed[current.key] = current
-      moves += 1
-
-      current.children.each do |child|
-        if !closed.has_key?(child.key)
-            open.add(child.h(moves), child)
+      children.each do |child|
+        if child.h <= limit
+          open.add(child.h, child)
         end
       end
 
