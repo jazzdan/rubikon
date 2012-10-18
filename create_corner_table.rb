@@ -1,41 +1,10 @@
 require './cube.rb'
 require './encoder.rb'
-# require './heuristic.rb'
-require 'csv'
+require './sharder.rb'
 
 initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 
-MAX_DEPTH = 11
-
-class States
-
-  TOTAL = 16_434_824
-  SHARDS = 9
-
-  def add!(key)
-    if (!lookup?(key))
-      @shards[shard(key)][key] = :done
-      return true
-    else
-      return false
-    end
-  end
-
-  def initialize()
-    size = TOTAL / SHARDS
-    @shards = Array.new()
-    SHARDS.times { @shards.push(Array.new(size)) }
-  end
-
-  def lookup?(key)
-    @shards[shard(key)][key] == :done
-  end
-
-  def shard(index)
-    return index % SHARDS
-  end
-
-end
+MAX_DEPTH = 8
 
 def csv(depth, key)
   puts depth.to_s + ',' + key.to_s
