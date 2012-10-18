@@ -1,5 +1,7 @@
 class Node
 
+  @@uid = 0
+
   def children
     if @children.nil?
       getChildren()
@@ -33,6 +35,8 @@ class Node
     @children = nil
     @parent = parent
     @state = state
+    @uid = @@uid
+    @@uid += 1
   end
 
   def parent
@@ -41,6 +45,10 @@ class Node
 
   def state
     @state
+  end
+
+  def uid
+    @uid
   end
 
 end

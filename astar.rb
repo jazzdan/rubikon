@@ -17,6 +17,7 @@ module Astar
 
     while !open.empty?
       current = open.next
+      puts 'checking... ' + current.key.to_s
       if current.state == Cube::GOAL
         # TODO: output the path
         puts 'we win'

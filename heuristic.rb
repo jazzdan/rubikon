@@ -10,17 +10,14 @@ module Heuristic
   EDGES_B = Array[]
 
   def self.calculate(corners, edge_a, edge_b)
-    [corners, edge_a, edge_b].max
+    [corners, edge_a, edge_b].map { |n| n.nil? ? 8 : n }.max
   end
 
   def self.fetch(state)
-    corner = CornerEncoder.encode(Cube.corners(state))
-    edge_a = EdgeEncoder.encodeA(Cube.edges(state))
-    edge_b = EdgeEncoder.encodeB(Cube.edges(state))
-    # puts 'corners: ' + CORNERS[corner].to_s
-    # puts 'edge_a: ' + EDGES_A[edge_a].to_s
-    # puts 'edge_b: ' + EDGES_B[edge_b].to_s
-    self.calculate(CORNERS[corner], EDGES_A[edge_a], EDGES_B[edge_b])
+    corner = CORNERS[CornerEncoder.encode(Cube.corners(state))]
+    edge_a = EDGES_A[EdgeEncoder.encodeA(Cube.edges(state))]
+    edge_b = EDGES_B[EdgeEncoder.encodeB(Cube.edges(state))]
+    self.calculate(corner, edge_a, edge_b)
   end
 
 end
