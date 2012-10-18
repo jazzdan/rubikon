@@ -46,11 +46,11 @@ module EdgeEncoder
   end
 
   def self.encodeA(edges)
-    self.encode(edges, CONVERSION_A)
+    self.encode(edges.select { |k| CONVERSION_A.include?(k) }, CONVERSION_A)
   end
 
   def self.encodeB(edges)
-    self.encode(edges, CONVERSION_B)
+    self.encode(edges.select { |k| CONVERSION_B.include?(k) }, CONVERSION_B)
   end
 
   def self.decode(key)
