@@ -3,7 +3,11 @@ module CornerEncoder
   CONVERSION = ['GRW', 'BRW', 'GRY', 'BRY', 'GOY', 'BOY', 'GOW', 'BOW']
 
   def self.encode(corners)
-    Integer(corners.map { |corner| CONVERSION.index(corner).to_s }.join, 8)
+    begin
+      Integer(corners.map { |corner| CONVERSION.index(corner).to_s }.join, 8)
+    rescue
+      puts 'CornderEncoder.encode: SHIIITTT - ' + corners.to_s
+    end
   end
 
   def self.decode(key)

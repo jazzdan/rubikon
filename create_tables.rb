@@ -6,26 +6,31 @@ require 'csv'
 initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 
 if __FILE__ == $0
-  states = Array[]
+  states = Array.new(16_434_824)
   states[CornerEncoder.encode(Cube.corners(initial_state))] = :done
   previous = Array[initial_state]
   depth = 1
   temp = Array[]
 
-  while depth < 4
+  while depth < 8
 
     previous.each do |current|
       current_key = CornerEncoder.encode(Cube.corners(current))
 
       Cube::FACES.keys.each do |face|
-        temp.push(Cube.rotate180(current, face))
-        temp.push(Cube.rotateClockwise(current, face))
-        temp.push(Cube.rotateCounterClockwise(current, face))
-        temp[-3, 3].each do |state|
-          key = CornerEncoder.encode(Cube.corners(state)) 
-          if states[key] != :done
-            states[key] = :done
-            puts key.to_s + ',' + depth.to_s
+        actions = []
+        actions.push(Cube.rotate180(current, face))
+        actions.push(Cube.rotateClockwise(current, face))
+        actions.push(Cube.rotateCounterClockwise(current, face))
+        actions.each_with_index do |state, i|
+          begin
+            key = CornerEncoder.encode(Cube.corners(state)) 
+            if states[key] != :done
+              states[key] = :done
+              puts key.to_s + ',' + depth.to_s
+            end
+            temp.push(state)
+          rescue
           end
         end
       end
