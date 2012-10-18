@@ -1,7 +1,8 @@
+require './astar.rb'
 require './cube.rb'
 require './heuristic.rb'
+require './sharder.rb'
 
-base = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
 
-puts 'h() = ' + Heuristic.fetch(Cube.rotate180(base, 'R')).to_s
+Astar.search(test)

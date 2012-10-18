@@ -1,3 +1,5 @@
+require 'awesome_print'
+
 class PQ
 
   def add(priority, item)
