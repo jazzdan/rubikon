@@ -9,7 +9,7 @@ module Astar
   def self.search(start)
 
     moves = 0
-    start_node = Node.new(start, :goal)
+    start_node = Node.new(start, :goal, :goal)
 
     closed = {}
     open = PQ.new
@@ -21,9 +21,12 @@ module Astar
       if current.state == Cube::GOAL
         # TODO: output the path
         puts 'we win'
+        puts
         n = current
         while n != :goal
-          puts n.state
+          if n.direction != :goal
+            print n.direction
+          end
           n = n.parent
         end
         return

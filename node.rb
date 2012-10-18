@@ -9,14 +9,18 @@ class Node
     @children
   end
 
+  def direction
+    @direction
+  end
+
   def getChildren
     @children = []
     Cube::FACES.keys.each do |face|
       state = Cube.rotateClockwise(@state, face)
-      @children.push Node.new(state, self)
+      @children.push Node.new(state, self, face + '1')
 
       state = Cube.rotateClockwise(Cube.rotateClockwise(state, face), face)
-      @children.push Node.new(state, self)
+      @children.push Node.new(state, self, face + '3')
     end
   end
 
@@ -31,8 +35,9 @@ class Node
     return (corner + edge_a + edge_b).to_i
   end
 
-  def initialize(state, parent)
+  def initialize(state, parent, direction)
     @children = nil
+    @direction = direction
     @parent = parent
     @state = state
     @uid = @@uid
