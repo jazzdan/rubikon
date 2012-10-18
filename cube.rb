@@ -39,7 +39,7 @@ module Cube
     [7, 13],
     [18, 48],
     [20, 21],
-    [23, 24], #
+    [23, 24],
     [26, 50],
     [28, 39],
     [31, 37],
@@ -75,13 +75,9 @@ module Cube
     end
   end
 
-  def self.edge(cube, i)
-    self.get(cube, EDGES[i])
-  end
-
   def self.edges(cube)
     EDGES.map do |edge|
-      self.get(cube, edge)
+      self.get_a(cube, edge).sort.join
     end
   end
 
