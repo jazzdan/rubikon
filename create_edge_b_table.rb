@@ -12,7 +12,9 @@ end
 
 if __FILE__ == $0
   states = Sharder.new
-  states.add!(EdgeEncoder.encodeB(Cube.edges(initial_state)))
+  base_key = EdgeEncoder.encodeB(Cube.edges(initial_state))
+  states.add!(base_key)
+  csv(0, base_key)
   previous = Array[initial_state]
   depth = 1
   temp = Array[]

@@ -12,7 +12,9 @@ end
 
 if __FILE__ == $0
   states = Sharder.new
-  states.add!(CornerEncoder.encode(Cube.corners(initial_state)))
+  base_key = CornerEncoder.encode(Cube.corners(initial_state))
+  states.add!(base_key)
+  csv(0, base_key)
   previous = Array[initial_state]
   depth = 1
   temp = Array[]
