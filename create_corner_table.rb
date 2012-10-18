@@ -11,7 +11,7 @@ def csv(depth, key)
 end
 
 if __FILE__ == $0
-  states = States.new
+  states = Sharder.new
   states.add!(CornerEncoder.encode(Cube.corners(initial_state)))
   previous = Array[initial_state]
   depth = 1

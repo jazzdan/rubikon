@@ -15,7 +15,7 @@ class Sharder
   def initialize()
     size = TOTAL / SHARDS
     @shards = Array.new()
-    SHARDS.times { @shards.push(Array.new(size)) }
+    SHARDS.times { @shards.push(Array.new()) }
   end
 
   def lookup?(key)
