@@ -169,4 +169,26 @@ module Cube
     end
   end
 
+  def self.count_valid(state)
+    valid = true
+    FACES.keys.each do |c|
+      if state.count(c)
+        valid = false
+      end
+    end
+    valid
+  end
+
+  def self.rotation_valid(state)
+    FACES.keys.each do |c|
+      new_state = nil
+      4.times {new_state = self.rotateClockwise(state, c)}
+      if state == new_state
+        return true
+      else
+        return false
+      end
+    end
+  end
+
 end
