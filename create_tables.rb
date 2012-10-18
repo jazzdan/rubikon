@@ -5,56 +5,83 @@ require 'csv'
 
 initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 
-errors = 0
+MAX_DEPTH = 11
+
+class States
+
+  TOTAL = 16_434_824
+  SHARDS = 9
+
+  def add!(key)
+    if (!lookup?(key))
+      @shards[shard(key)][key] = :done
+      return true
+    else
+      return false
+    end
+  end
+
+  def initialize()
+    size = TOTAL / SHARDS
+    @shards = Array.new()
+    SHARDS.times { @shards.push(Array.new(size)) }
+  end
+
+  def lookup?(key)
+    @shards[shard(key)][key] == :done
+  end
+
+  def shard(index)
+    return index % SHARDS
+  end
+
+end
+
+def csv(depth, key)
+  puts depth.to_s + ',' + key.to_s
+end
 
 if __FILE__ == $0
-  states = Array.new(16_434_824)
-  states[CornerEncoder.encode(Cube.corners(initial_state))] = :done
+  states = States.new
+  states.add!(CornerEncoder.encode(Cube.corners(initial_state)))
   previous = Array[initial_state]
   depth = 1
   temp = Array[]
 
-  while depth < 11
+  while depth < MAX_DEPTH
+    # puts 'depth ' + depth.to_s
+    # puts '================================================================='
 
-    previous.each do |current|
-      current_key = CornerEncoder.encode(Cube.corners(current))
-
+    current = previous.pop
+    while !current.nil?
       Cube::FACES.keys.each do |face|
-        actions = []
-        actions.push(Cube.rotate180(current, face))
-        actions.push(Cube.rotateClockwise(current, face))
-        actions.push(Cube.rotateCounterClockwise(current, face))
-        actions.each_with_index do |state, i|
-          begin
-            key = CornerEncoder.encode(Cube.corners(state)) 
-            if states[key] != :done
-              states[key] = :done
-              puts key.to_s + ',' + depth.to_s
-            end
-            temp.push(state)
-          rescue
-            #puts
-            puts
-            puts 'action: ' + ['180', 'CW', 'CCW'][i]
-            puts ' depth: ' + depth.to_s
-            puts '  face: ' + face
-            puts 'origin: ' + current
-            puts ' state: ' + state
-            puts
-            #Cube.pp(state)
-            #puts
-            errors += 1
-          end
+        state = Cube.rotateClockwise(current, face)
+        key = CornerEncoder.encode(Cube.corners(state))
+        if states.add!(key)
+          temp.push(state)
+          csv(depth, key)
+        end
+
+        state = Cube.rotateClockwise(state, face)
+        key = CornerEncoder.encode(Cube.corners(state))
+        if states.add!(key)
+          temp.push(state)
+          csv(depth, key)
+        end
+
+        state = Cube.rotateClockwise(state, face)
+        key = CornerEncoder.encode(Cube.corners(state))
+        if states.add!(key)
+          temp.push(state)
+          csv(depth, key)
         end
       end
-
+      current = previous.pop
     end
+
     previous = temp
     temp = []
     depth += 1
   end
-
-  puts
-  puts errors.to_s + ' ERRORS'
 
 end
