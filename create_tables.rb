@@ -14,7 +14,7 @@ if __FILE__ == $0
   depth = 1
   temp = Array[]
 
-  while depth < 4
+  while depth < 11
 
     previous.each do |current|
       current_key = CornerEncoder.encode(Cube.corners(current))
