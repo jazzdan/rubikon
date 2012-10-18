@@ -3,8 +3,11 @@ require 'awesome_print'
 class PQ
 
   def add(priority, item)
-    @list << [priority, @list.length, item]
-    @list.sort!
+    if @items[item.uid].nil?
+      @items[item.uid] = item
+      @list << [priority, @list.length, item.uid]
+      @list.sort!
+    end
     self
   end
 
@@ -13,11 +16,12 @@ class PQ
   end
 
   def initialize
+    @items = {}
     @list = []
   end
 
   def next
-    @list.shift[2]
+    @items.delete(@list.shift[2])
   end
 
 end

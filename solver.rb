@@ -5,4 +5,9 @@ require './sharder.rb'
 
 test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
 
-Astar.search(test)
+Astar.search(
+  Cube.rotateClockwise(
+    Cube.rotateCounterClockwise(Cube.rotateClockwise(Cube.rotateClockwise(Cube::GOAL, 'O'), 'B'), 'W'),
+    'Y'
+  )
+)
