@@ -8,8 +8,8 @@ module Astar
 
   def self.search(start)
 
-    limit = 5
     start_node = Node.new(start, :goal, 0, :goal)
+    limit = start_node.h
 
     closed = {}
     open = PQ.new
@@ -17,8 +17,6 @@ module Astar
 
     while !open.empty?
       current = open.next
-      # puts 'state: ' + current.state
-      puts 'h() = ' + current.h.to_s
       puts 'd   = ' + current.depth.to_s
       if current.state == Cube::GOAL
         puts
