@@ -37,12 +37,20 @@ module EdgeEncoder
   CONVERSION_A = ["BO", "BR", "BW", "BY", "GO", "GR"]
   CONVERSION_B = ["GR", "GW", "GY", "OW", "OY", "RW"]
 
-  def self.encode(edges)
+  def self.encode(edges, set)
     begin
-      Integer(edges.map { |corner| CONVERSION.index(edge).to_s}.join, 8)
+      Integer(edges.map { |edge| set.index(edge).to_s }.join, 8)
     rescue
       puts "Invalid edge state" + edges.to_s
     end
+  end
+
+  def self.encodeA(edges)
+    self.encode(edges, CONVERSION_A)
+  end
+
+  def self.encodeB(edges)
+    self.encode(edges, CONVERSION_B)
   end
 
   def self.decode(key)
