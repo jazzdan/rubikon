@@ -113,7 +113,9 @@ module Cube
 
   def self.rotate!(str, repeat=1)
     arr = str.split("")
-    repeat.times { arr.unshift(arr.pop) }
+    repeat.times do
+      arr.unshift(arr.pop)
+    end
     arr.join
   end
 
@@ -132,8 +134,7 @@ module Cube
 
   def self.rotateClockwise(cube, face_id)
     cube = '' + cube
-    # rotate the face
-    face = self.rotate!(self.face(cube, face_id), 3)
+    face = self.rotate!(self.face(cube, face_id), 2)
     cube = self.set(cube, FACES[face_id], face)
 
     # rotate the sides
@@ -179,16 +180,52 @@ module Cube
     valid
   end
 
-  def self.rotation_valid(state)
+  def self.rotate180_valid(state)
+    puts
+    puts 'Validating 180 rotations...'
+    puts
     FACES.keys.each do |c|
-      new_state = nil
-      4.times {new_state = self.rotateClockwise(state, c)}
-      if state == new_state
-        return true
-      else
-        return false
-      end
+      new_state = '' + state
+      2.times {new_state = self.rotate180(new_state, c)}
+      puts '     face: ' + c
+      puts '    state: ' + state
+      puts 'new_state: ' + new_state
+      puts '   PASSED: ' + (state == new_state).to_s
+      puts
     end
+    puts 'complete.'
+  end
+
+  def self.rotateCW_valid(state)
+    puts
+    puts 'Validating CW rotations...'
+    puts
+    FACES.keys.each do |c|
+      new_state = '' + state
+      4.times {new_state = self.rotateClockwise(new_state, c)}
+      puts '     face: ' + c
+      puts '    state: ' + state
+      puts 'new_state: ' + new_state
+      puts '   PASSED: ' + (state == new_state).to_s
+      puts
+    end
+    puts 'complete.'
+  end
+
+  def self.rotateCCW_valid(state)
+    puts
+    puts 'Validating CCW rotations...'
+    puts
+    FACES.keys.each do |c|
+      new_state = '' + state
+      4.times {new_state = self.rotateCounterClockwise(new_state, c)}
+      puts '     face: ' + c
+      puts '    state: ' + state
+      puts 'new_state: ' + new_state
+      puts '   PASSED: ' + (state == new_state).to_s
+      puts
+    end
+    puts 'complete.'
   end
 
 end
