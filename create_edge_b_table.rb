@@ -4,7 +4,7 @@ require './sharder.rb'
 
 initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
 
-MAX_DEPTH = 6
+MAX_DEPTH = 11
 
 def csv(depth, key)
   puts depth.to_s + ',' + key.to_s
@@ -33,14 +33,7 @@ if __FILE__ == $0
           csv(depth, key)
         end
 
-        state = Cube.rotateClockwise(state, face)
-        key = EdgeEncoder.encodeB(Cube.edges(state))
-        if states.add!(key)
-          temp.push(state)
-          csv(depth, key)
-        end
-
-        state = Cube.rotateClockwise(state, face)
+        state = Cube.rotateClockwise(Cube.rotateClockwise(state, face), face)
         key = EdgeEncoder.encodeB(Cube.edges(state))
         if states.add!(key)
           temp.push(state)
