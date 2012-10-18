@@ -171,17 +171,24 @@ module Cube
   end
 
   def self.count_valid(state)
-    valid = true
-    FACES.keys.each do |c|
-      if state.count(c)
-        valid = false
+    puts 'Validating counts...'
+    puts
+    state = '' + state
+    4.times {
+      FACES.keys.each do |c|
+        FACES.keys.each do |char|
+          puts char + ': ' + (state.count(char) == 9).to_s
+        end
+        state = self.rotateClockwise(state, c)
+        puts
       end
-    end
-    valid
+    }
+    puts
+    puts 'complete.'
+    puts
   end
 
   def self.rotate180_valid(state)
-    puts
     puts 'Validating 180 rotations...'
     puts
     FACES.keys.each do |c|
@@ -194,10 +201,10 @@ module Cube
       puts
     end
     puts 'complete.'
+    puts
   end
 
   def self.rotateCW_valid(state)
-    puts
     puts 'Validating CW rotations...'
     puts
     FACES.keys.each do |c|
@@ -210,10 +217,10 @@ module Cube
       puts
     end
     puts 'complete.'
+    puts
   end
 
   def self.rotateCCW_valid(state)
-    puts
     puts 'Validating CCW rotations...'
     puts
     FACES.keys.each do |c|
@@ -226,6 +233,7 @@ module Cube
       puts
     end
     puts 'complete.'
+    puts
   end
 
 end
