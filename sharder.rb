@@ -13,9 +13,8 @@ class Sharder
   end
 
   def initialize()
-    size = TOTAL / SHARDS
-    @shards = Array.new()
-    SHARDS.times { @shards.push(Array.new()) }
+    @shards = {}
+    (0..SHARDS).each { |i| @shards[i] = {} }
   end
 
   def lookup?(key)
