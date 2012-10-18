@@ -221,4 +221,19 @@ module Cube
     puts
   end
 
+  def self.random_state(state)
+    repeat = Random.rand 0..19
+    repeat.times do
+      action = Random.rand 0..1
+      case action
+      when 0
+        state = Cube.rotateClockwise(state, Cube::FACES.keys.sample)
+      when 1
+        state = Cube.rotateCounterClockwise(state, Cube::FACES.keys.sample)
+      end
+    end
+    state
+  end
+
 end
+
