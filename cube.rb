@@ -222,8 +222,11 @@ module Cube
   end
 
   def self.random_state(state)
-    repeat = Random.rand 0..19
-    repeat.times do
+    #depth = Random.rand 0..19
+    depth = 5
+    puts 'depth: ' + depth.to_s
+
+    depth.times do
       action = Random.rand 0..1
       case action
       when 0
@@ -236,4 +239,3 @@ module Cube
   end
 
 end
-

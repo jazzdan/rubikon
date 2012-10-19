@@ -4,19 +4,10 @@ require './heuristic.rb'
 require './sharder.rb'
 
 test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
+state = Cube.random_state(Cube::GOAL)
 
-Astar.search(
-  Cube.rotateClockwise(
-  Cube.rotateClockwise(
-    Cube.rotateCounterClockwise(
-      Cube.rotateCounterClockwise(
-        Cube.rotateClockwise(
-          Cube.rotateClockwise(Cube::GOAL, 'O'), 'B'
-        ),
-        'W'
-      ),
-      'Y'
-    ),
-    'G'
-  ), 'O')
-)
+puts 'Starting state:'
+puts state
+puts
+
+Astar.search(state)
