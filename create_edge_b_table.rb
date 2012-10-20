@@ -20,8 +20,6 @@ if __FILE__ == $0
   temp = Array[]
 
   while depth < MAX_DEPTH
-    # puts 'depth ' + depth.to_s
-    # puts '================================================================='
 
     current = previous.pop
     while !current.nil?
