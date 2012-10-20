@@ -6,7 +6,7 @@ module CornerEncoder
     begin
       Integer(corners.map { |corner| CONVERSION.index(corner).to_s }.join, 8)
     rescue
-      # puts 'CornderEncoder.encode: SHIIITTT - ' + corners.to_s
+      puts "ENCODER: Unable to determine validity of corner cubies."
     end
   end
 
@@ -49,11 +49,8 @@ module CubeEncoder
         return false
       end
     rescue
-      puts "derp edge encode"
+      puts "ENCODER: Unable to determine validity of cube."
     end
-  end
-
-  def self.decode(key)
   end
 
 end
@@ -67,7 +64,7 @@ module EdgeEncoder
     begin
       Integer(edges.map { |edge| set.index(edge).to_s }.join, 8)
     rescue
-      puts "Invalid edge state" + edges.to_s
+      puts "ENCODER: Invalid edge state" + edges.to_s
     end
   end
 
