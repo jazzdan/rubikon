@@ -85,6 +85,7 @@ module Astar
       if solution != :none
         return solution, new_cost_limit
       end
+      path_so_far.pop
       next_cost_limit = [next_cost_limit, new_cost_limit].min
     end
 
