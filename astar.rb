@@ -3,6 +3,7 @@ require './encoder.rb'
 require './heuristic.rb'
 require './node.rb'
 require './pq.rb'
+require 'awesome_print'
 
 module Astar
 
@@ -44,6 +45,47 @@ module Astar
 
     end
 
+  end
+
+  def self.search2(start)
+    cost_limit = Heuristic.fetch(start)
+    start = Node.new(start, :goal, 0, :goal)
+    path_so_far = [start]
+    
+    while true
+      solution, cost_limit = self.depth_limited_search(0, path_so_far, cost_limit)
+
+      if solution != :none
+        puts 'Found a solution: ' + solution.to_s
+        return solution
+      elsif cost_limit == Float::INFINITY
+        return :none
+      end
+    end
+  end
+
+  def self.depth_limited_search(start_cost, path_so_far, cost_limit)
+    node = path_so_far.last
+    minimum_cost = start_cost + Heuristic.fetch(node.state)
+
+    if minimum_cost > cost_limit
+      return :none, minimum_cost
+    elsif node.state == Cube::GOAL
+      return path_so_far, cost_limit
+    end
+
+    next_cost_limit = Float::INFINITY
+    children = node.children.sort{|child| child.h}
+    children.each do |child|
+      new_start_cost = start_cost + child.h
+      solution, new_cost_limit = depth_limited_search(new_start_cost, path_so_far.push(child), cost_limit)
+      if solution != :none
+        return solution, new_cost_limit
+      end
+      next_cost_limit = [next_cost_limit, new_cost_limit].min
+    end
+
+    return :none, next_cost_limit
   end
 
 end

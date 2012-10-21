@@ -223,7 +223,7 @@ module Cube
 
   def self.random_state(state)
     #depth = Random.rand 0..19
-    depth = 5 # ... or generate states of a certain depth
+    depth = 2 # ... or generate states of a certain depth
     puts 'depth: ' + depth.to_s
 
     depth.times do
