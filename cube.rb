@@ -221,7 +221,7 @@ module Cube
     puts
   end
 
-  def self.random_state(state, depth)
+  def self.random_state(state, depth=0)
     if depth == 0
       depth = Random.rand(0..19)
     end
