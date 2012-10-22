@@ -80,7 +80,7 @@ module Astar
     children = node.children.sort{|child| child.h}
     children.each do |child|
       new_start_cost = start_cost + child.h
-      puts 'New start cost ' + new_start_cost.to_s + ' at depth ' + child.depth.to_s
+      puts 'New start cost limit ' + new_start_cost.to_s + ' at depth ' + child.depth.to_s
       solution, new_cost_limit = depth_limited_search(new_start_cost, path_so_far.push(child), cost_limit)
       if solution != :none
         return solution, new_cost_limit
