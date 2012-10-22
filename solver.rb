@@ -4,7 +4,7 @@ require './heuristic.rb'
 require './sharder.rb'
 
 module Solver
-  def self.solve state = Cube.random_state(Cube::GOAL)
+  def self.solve state = Cube.random_state(Cube::GOAL, 0) # Second param is depth if !0
 
     if !CubeEncoder.encode? state
       puts "INVALID STATE: Unable to process cube file."
@@ -23,3 +23,5 @@ module Solver
     Astar.search2(state)
   end
 end
+
+Solver.solve

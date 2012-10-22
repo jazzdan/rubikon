@@ -221,9 +221,10 @@ module Cube
     puts
   end
 
-  def self.random_state(state)
-    #depth = Random.rand 0..19
-    depth = 7 # ... or generate states of a certain depth
+  def self.random_state(state, depth)
+    if depth == 0
+      depth = Random.rand(0..19)
+    end
     puts 'depth: ' + depth.to_s
 
     depth.times do
