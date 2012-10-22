@@ -51,7 +51,7 @@ module Astar
     cost_limit = Heuristic.fetch(start)
     start = Node.new(start, :goal, 0, :goal)
     path_so_far = [start]
-    
+
     while true
       solution, cost_limit = self.depth_limited_search(0, path_so_far, cost_limit)
 
@@ -68,7 +68,7 @@ module Astar
 
   def self.depth_limited_search(start_cost, path_so_far, cost_limit)
     node = path_so_far.last
-    minimum_cost = start_cost + node.h
+    minimum_cost = node.h
 
     if minimum_cost > cost_limit
       return :none, minimum_cost
@@ -79,8 +79,8 @@ module Astar
     next_cost_limit = Float::INFINITY
     children = node.children.sort{|child| child.h}
     children.each do |child|
-      new_start_cost = start_cost + child.h
-      puts 'New start cost limit ' + new_start_cost.to_s + ' at depth ' + child.depth.to_s
+      new_start_cost = child.h
+      puts 'cost limit ' + new_start_cost.to_s + ' at depth ' + child.depth.to_s
       solution, new_cost_limit = depth_limited_search(new_start_cost, path_so_far.push(child), cost_limit)
       if solution != :none
         return solution, new_cost_limit
