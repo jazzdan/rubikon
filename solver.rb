@@ -3,13 +3,17 @@ require './cube.rb'
 require './heuristic.rb'
 require './sharder.rb'
 
-test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
-test2 = "BBYRRYGRGOBRWYOYBBGGGRYWRBOWGGROGOOOYBWYOWBGWRWBOWYYWR"
-state = Cube.random_state(Cube::GOAL)
+module Solver
+  def self.solve state = Cube.random_state(Cube::GOAL)
+    test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
 
-puts 'Starting state:'
-puts state
-puts
+    test2 = "BBYRRYGRGOBRWYOYBBGGGRYWRBOWGGROGOOOYBWYOWBGWRWBOWYYWR"
 
-#Astar.search(state)
-Astar.search2(state)
+    puts 'Starting state:'
+    puts state
+    puts
+
+    #Astar.search(state)
+    Astar.search2(state)
+  end
+end
