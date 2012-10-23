@@ -3,7 +3,6 @@ require './encoder.rb'
 require './heuristic.rb'
 require './node.rb'
 require './pq.rb'
-require 'awesome_print'
 
 module Astar
 

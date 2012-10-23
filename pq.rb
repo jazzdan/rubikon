@@ -1,4 +1,3 @@
-require 'awesome_print'
 
 class PQ
 
