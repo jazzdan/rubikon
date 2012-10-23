@@ -32,25 +32,16 @@ end
 
 module CubeEncoder
 
-  CONVERSION = []
-
-  def self.encode(cube)
-  end
-
   def self.encode?(cube)
-    begin
-      if CornerEncoder.encode?(Cube.corners(cube)) == true
-        return true
-      elsif EdgeEncoder.encodeA?(Cube.edges(cube)) == true
-        return true
-      elsif EdgeEncoder.encodeB?(Cube.edges(cube)) == true
-        return true
-      else
-        return false
-      end
-    rescue
-      puts "ENCODER: Unable to determine validity of cube."
+    corners = Cube.corners cube
+    edges = Cube.edges cube
+    
+    if CornerEncoder.encode?(corners) and EdgeEncoder.encodeA?(edges) and EdgeEncoder.encodeB?(edges)
+      return true
+    else
+      return false
     end
+
   end
 
 end
