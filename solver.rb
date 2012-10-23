@@ -5,17 +5,12 @@ require './sharder.rb'
 
 module Solver
   def self.solve
-    # second param = depth - random if not spcified
     state = Cube.random_state(Cube::GOAL, 8)
 
     if !CubeEncoder.encode? state
       puts "INVALID STATE: Unable to process cube file."
       break
     end
-
-    test = "OROOROOOOGGGWYWBBBBGBWYWGBGGGGWWWBBBRORRORRRRYYYYWYYWY"
-
-    test2 = "BBYRRYGRGOBRWYOYBBGGGRYWRBOWGGROGOOOYBWYOWBGWRWBOWYYWR"
 
     puts 'Starting state:'
     puts state
