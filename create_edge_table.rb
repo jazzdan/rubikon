@@ -2,8 +2,6 @@ require './cube.rb'
 require './encoder.rb'
 require './sharder.rb'
 
-initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
-
 MAX_DEPTH = 11
 
 def csv(depth, key)
@@ -11,11 +9,11 @@ def csv(depth, key)
 end
 
 if __FILE__ == $0
-  states = Sharder.new
-  base_key = EdgeEncoder.encodeB(Cube.edges(initial_state))
+  states = Sharder.new(12)
+  base_key = EdgeEncoder.encode(Cube.edges(Cube::GOAL))
   states.add!(base_key)
   csv(0, base_key)
-  previous = Array[initial_state]
+  previous = Array[Cube::GOAL]
   depth = 1
   temp = Array[]
 
@@ -25,14 +23,14 @@ if __FILE__ == $0
     while !current.nil?
       Cube::FACES.keys.each do |face|
         state = Cube.rotateClockwise(current, face)
-        key = EdgeEncoder.encodeB(Cube.edges(state))
+        key = EdgeEncoder.encode(Cube.edges(state))
         if states.add!(key)
           temp.push(state)
           csv(depth, key)
         end
 
         state = Cube.rotateClockwise(Cube.rotateClockwise(state, face), face)
-        key = EdgeEncoder.encodeB(Cube.edges(state))
+        key = EdgeEncoder.encode(Cube.edges(state))
         if states.add!(key)
           temp.push(state)
           csv(depth, key)

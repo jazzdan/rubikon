@@ -1,8 +1,5 @@
 class Sharder
 
-  TOTAL = 16_434_824
-  SHARDS = 9
-
   def add!(key)
     if (!lookup?(key))
       @shards[shard(key)][key] = :done
@@ -12,9 +9,10 @@ class Sharder
     end
   end
 
-  def initialize()
+  def initialize(shard_count=10)
+    @shard_count = shard_count - 1
     @shards = {}
-    (0..SHARDS).each { |i| @shards[i] = {} }
+    (0..@shard_count).each { |i| @shards[i] = {} }
   end
 
   def lookup?(key)
@@ -22,7 +20,7 @@ class Sharder
   end
 
   def shard(index)
-    return index % SHARDS
+    return index % @shard_count
   end
 
 end

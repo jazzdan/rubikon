@@ -35,7 +35,7 @@ module CubeEncoder
   def self.encode?(cube)
     corners = Cube.corners cube
     edges = Cube.edges cube
-    
+
     if CornerEncoder.encode?(corners) and EdgeEncoder.encodeA?(edges) and EdgeEncoder.encodeB?(edges)
       return true
     else
@@ -48,42 +48,24 @@ end
 
 module EdgeEncoder
 
-  CONVERSION_A = ["BO", "BR", "BW", "BY", "GO", "GR"]
-  CONVERSION_B = ["GR", "GW", "GY", "OW", "OY", "RW"]
+  CONVERSION = ["RW", "GR", "BR", "RY", "GW", "GY", "BY", "BW", "GO", "OY", "BO", "OW"]
 
-  def self.encode(edges, set)
+  def self.encode(edges)
     begin
-      Integer(edges.map { |edge| set.index(edge).to_s }.join, 8)
+      Integer(edges.map { |edge| CONVERSION.index(edge).to_s(12) }.join, 12)
     rescue
       puts "ENCODER: Invalid edge state" + edges.to_s
     end
   end
 
-  def self.encode?(edges, set)
+  def self.encode?(edges)
     begin
-      Integer(edges.map { |edge| set.index(edge).to_s }.join, 8)
+      Integer(edges.map { |edge| CONVERSION.index(edge).to_s }.join, 8)
       return true
     rescue
       return false
     end
   end
-
-  def self.encodeA(edges)
-    self.encode(edges.select { |k| CONVERSION_A.include?(k) }, CONVERSION_A)
-  end
-
-  def self.encodeA?(edges)
-    self.encode?(edges.select { |k| CONVERSION_A.include?(k) }, CONVERSION_A)
-  end
-
-  def self.encodeB(edges)
-    self.encode(edges.select { |k| CONVERSION_B.include?(k) }, CONVERSION_B)
-  end
-
-  def self.encodeB?(edges)
-    self.encode?(edges.select { |k| CONVERSION_B.include?(k) }, CONVERSION_B)
-  end
-
 
   def self.decode(key)
     s = key.to_s(8)
