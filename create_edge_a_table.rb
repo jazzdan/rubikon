@@ -2,7 +2,7 @@ require './cube.rb'
 require './encoder.rb'
 require './sharder.rb'
 
-initial_state = "RRRRRRRRRGGGYYYBBBGGGYYYBBBGGGYYYBBBOOOOOOOOOWWWWWWWWW"
+initial_state = Cube::GOAL
 
 MAX_DEPTH = 11
 

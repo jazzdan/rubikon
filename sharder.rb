@@ -3,13 +3,17 @@ class Sharder
   TOTAL = 16_434_824
   SHARDS = 9
 
-  def add!(key)
+  def add!(key, val=:done)
     if (!lookup?(key))
-      @shards[shard(key)][key] = :done
+      @shards[shard(key)][key] = val
       return true
     else
       return false
     end
+  end
+
+  def get(key)
+    @shards[shard(key)][key]
   end
 
   def initialize()
@@ -18,7 +22,7 @@ class Sharder
   end
 
   def lookup?(key)
-    @shards[shard(key)][key] == :done
+    !@shards[shard(key)][key].nil?
   end
 
   def shard(index)
