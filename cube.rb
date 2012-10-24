@@ -225,7 +225,6 @@ module Cube
     if depth == 0
       depth = Random.rand(0..19)
     end
-    puts 'depth: ' + depth.to_s
 
     depth.times do
       action = Random.rand 0..1

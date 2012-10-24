@@ -6,6 +6,8 @@ require './pq.rb'
 
 module Astar
 
+  @@nodes_examined = 1
+
   def self.search(start)
 
     start_node = Node.new(start, :goal, 0, :goal)
@@ -46,27 +48,40 @@ module Astar
 
   end
 
-  def self.search2(start)
-    cost_limit = Heuristic.fetch(start)
-    start = Node.new(start, :goal, 0, :goal)
+  def self.search2(start_str)
+    start = Node.new(start_str, :goal, 0, :goal)
+    cost_limit = start.h
     path_so_far = [start]
+    puts
+    puts 'start: ' + start_str
+    puts
 
     while true
-      solution, cost_limit = self.depth_limited_search(0, path_so_far, cost_limit)
+      solution, cost_limit = self.depth_limited_search(path_so_far, cost_limit)
 
       if solution != :none
-        puts 'Found a solution: '
-        solution.each {|x| print x.direction, ' ' }
+        puts 'COMPLETE'
+        puts '====================================================='
+        print 'solution: '
+        solution.reverse.each {|x| print x.direction, ' ' }
         puts
+        puts 'steps: ' + (solution.length - 1).to_s
+        puts 'nodes examined: ' + @@nodes_examined.to_s
         return solution
       elsif cost_limit == Float::INFINITY
         puts 'No solution found'
         return :none
+      else
+        cost_limit += 1
+        puts 'increasing cost limit to ' + cost_limit.to_s
       end
+      puts 'nodes examined: ' + @@nodes_examined.to_s
+      puts '====================================================='
+      puts
     end
   end
 
-  def self.depth_limited_search(start_cost, path_so_far, cost_limit)
+  def self.depth_limited_search(path_so_far, cost_limit)
     node = path_so_far.last
     minimum_cost = node.h
 
@@ -79,9 +94,8 @@ module Astar
     next_cost_limit = Float::INFINITY
     children = node.children.sort{|child| child.h}
     children.each do |child|
-      new_start_cost = child.h
-      puts 'cost limit ' + new_start_cost.to_s + ' at depth ' + child.depth.to_s
-      solution, new_cost_limit = depth_limited_search(new_start_cost, path_so_far.push(child), cost_limit)
+      @@nodes_examined += 1
+      solution, new_cost_limit = depth_limited_search(path_so_far.push(child), cost_limit)
       if solution != :none
         return solution, new_cost_limit
       end
