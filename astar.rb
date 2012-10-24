@@ -57,6 +57,7 @@ module Astar
       if solution != :none
         puts 'Found a solution: '
         solution.each {|x| print x.direction, ' ' }
+        puts
         return solution
       elsif cost_limit == Float::INFINITY
         puts 'No solution found'

@@ -2,6 +2,10 @@ class Node
 
   @@uid = 0
 
+  def self.get_directions nodes
+    nodes.map {|x| x.direction}
+  end
+
   def children
     if @children.nil?
       getChildren()

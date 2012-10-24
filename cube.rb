@@ -239,4 +239,31 @@ module Cube
     state
   end
 
+  def self.execute_and_check_directions(cube, directions)
+    if directions.first == :goal
+      directions.shift
+    end
+
+    cube_to_goal = cube
+
+    directions.map do |dir|
+      face = dir[0]
+      rotations = dir[1].to_i
+      rotations.times do 
+        cube_to_goal = Cube.rotateClockwise(cube_to_goal, face)
+      end
+
+    end
+
+    if cube_to_goal == Cube::GOAL
+      print cube
+      puts ' was verified.'
+    else
+      print 'ERROR: '
+      print cube
+      puts ' could not be verified.'
+    end
+
+  end
+
 end

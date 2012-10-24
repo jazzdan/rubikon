@@ -5,7 +5,7 @@ require './sharder.rb'
 
 module Solver
   def self.solve
-    state = Cube.random_state(Cube::GOAL, 8)
+    state = Cube.random_state(Cube::GOAL, 3)
 
     if !CubeEncoder.encode? state
       puts "INVALID STATE: Unable to process cube file."
@@ -21,4 +21,4 @@ module Solver
   end
 end
 
-Solver.solve
+#Solver.solve
