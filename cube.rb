@@ -262,10 +262,12 @@ module Cube
     if cube_to_goal == Cube::GOAL
       print cube
       puts ' was verified.'
+      return true
     else
       print 'ERROR: '
       print cube
       puts ' could not be verified.'
+      return false
     end
 
   end
