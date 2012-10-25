@@ -77,7 +77,7 @@ module Astar
         puts 'nodes examined: ' + @@nodes_examined.to_s
         puts 'memory used: ' + memory_used.to_s
         puts 'time taken: ' + time_taken.to_s
-        self.record_stats(start_str, Node.get_human_directions(solution), solution.length-1, time_taken, memory_used, @@nodes_examined)
+        self.record_stats(start_str, solution.path, solution.depth, time_taken, memory_used, @@nodes_examined)
         return solution
       else
         cost_limit += 1
