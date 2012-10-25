@@ -10,7 +10,7 @@ module Astar
   @@nodes_examined = 1
   @@counts = {}
 
-  def self.search2(start_str)
+  def self.search(start_str)
     t1 = Time.now
 
     solution = nil

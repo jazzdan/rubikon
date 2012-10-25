@@ -6,7 +6,7 @@ for i in 1..10
   10.times do
     puts initial_state = Cube.random_state(Cube::GOAL, i)
 
-    result = Astar.search2(initial_state)
+    result = Astar.search(initial_state)
 
     #directions = Node.get_directions result
 

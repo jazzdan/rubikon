@@ -13,8 +13,7 @@ module Solver
       break
     end
 
-    #Astar.search(state)
-    Astar.search2(state)
+    Astar.search(state)
   end
 end
 
