@@ -66,9 +66,11 @@ module Astar
   end
 
   def self.record_stats(start_state, solution, depth, time_taken, memory_used, nodes_examined)
-   CSV.open("stats.csv", "ab") do |csv|
+    Cube.execute_and_check_directions(start_state, solution) 
+
+    CSV.open("stats.csv", "ab") do |csv|
       csv << [Time.now, start_state, solution, depth, time_taken, memory_used, nodes_examined]
-   end
+    end
   end
 
 end

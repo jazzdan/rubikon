@@ -242,7 +242,9 @@ module Cube
   end
 
   def self.execute_and_check_directions(cube, directions)
-    if directions.first == :goal
+    directions = directions.split(' ').reverse
+
+    if directions.first == "goal"
       directions.shift
     end
 
