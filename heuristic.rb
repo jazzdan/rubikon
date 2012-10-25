@@ -19,10 +19,6 @@ module Heuristic
     edge_a = EDGES_A.get(EdgeEncoder.encodeA(Cube.edges(state)))
     edge_b = EDGES_B.get(EdgeEncoder.encodeB(Cube.edges(state)))
 
-    # if edge_a.nil?
-    #  puts 'errr: ' + edge_a.to_s + ' ' + state
-    #end
-    # self.calculate(corner, edge_a, edge_b)
     calculate(corner, edge_a, edge_b)
   end
 
