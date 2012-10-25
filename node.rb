@@ -36,6 +36,16 @@ class Node
     end
   end
 
+  def path
+    path = [@direction]
+    parent = self.parent
+    while parent != :goal
+      path.push parent.direction
+      parent = parent.parent
+    end
+    path.join(' ')
+  end
+
   def h()
     @depth + Heuristic.fetch(@state)
   end

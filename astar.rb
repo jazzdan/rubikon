@@ -52,33 +52,33 @@ module Astar
   def self.search2(start_str)
     start = Node.new(start_str, :goal, 0, :goal)
     cost_limit = start.h
-    path_so_far = [start]
+
     puts
     puts 'start: ' + start_str
+    puts 'initial limit: ' + cost_limit.to_s
+    puts '====================================================='
     puts
     t1 = Time.now
 
     while true
-      solution, cost_limit = self.depth_limited_search(path_so_far, cost_limit)
+      solution = self.depth_limited_search(start, cost_limit)
+      puts 'limit depth: ' + cost_limit.to_s
 
-      if solution != :none
+      if !solution.nil?
         t2 = Time.now
         memory_used = OS.rss_bytes
         time_taken = t2 - t1
         puts 'COMPLETE'
         puts '====================================================='
         print 'solution: '
-        solution.reverse.each {|x| print x.direction, ' ' }
+        print solution.path
         puts
-        puts 'steps: ' + (solution.length - 1).to_s
+        puts 'steps: ' + solution.depth.to_s
         puts 'nodes examined: ' + @@nodes_examined.to_s
         puts 'memory used: ' + memory_used.to_s
         puts 'time taken: ' + time_taken.to_s
         self.record_stats(start_str, Node.get_human_directions(solution), solution.length-1, time_taken, memory_used, @@nodes_examined)
         return solution
-      elsif cost_limit == Float::INFINITY
-        puts 'No solution found'
-        return :none
       else
         cost_limit += 1
         puts 'increasing cost limit to ' + cost_limit.to_s
@@ -89,29 +89,20 @@ module Astar
     end
   end
 
-  def self.depth_limited_search(path_so_far, cost_limit)
-    node = path_so_far.last
-    minimum_cost = node.h
+  def self.depth_limited_search(node, cost_limit)
+    result = nil
 
-    if minimum_cost > cost_limit
-      return :none, cost_limit
-    elsif node.state == Cube::GOAL
-      return path_so_far, cost_limit
-    end
-
-    next_cost_limit = Float::INFINITY
-    children = node.children.sort{|child| child.h}
-    children.each do |child|
-      @@nodes_examined += 1
-      solution, new_cost_limit = depth_limited_search(path_so_far.push(child), cost_limit)
-      if solution != :none
-        return solution, new_cost_limit
+    if node.h <= cost_limit and node.state == Cube::GOAL
+      result = node
+    elsif node.h <= cost_limit and node.state != Cube::GOAL
+      node.children.sort{|child| child.h}.each do |child|
+        @@nodes_examined += 1
+        result = depth_limited_search(child, cost_limit)
+        break if !result.nil?
       end
-      path_so_far.pop
-      next_cost_limit = [next_cost_limit, new_cost_limit].min
     end
 
-    return :none, next_cost_limit
+    return result
   end
 
   def self.record_stats(start_state, solution, depth, time_taken, memory_used, nodes_examined)
