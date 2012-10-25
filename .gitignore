@@ -20,3 +20,4 @@ doc/
 
 test.*
 heuristics/*.csv
+stats.csv

@@ -3,6 +3,7 @@ require './encoder.rb'
 require './heuristic.rb'
 require './node.rb'
 require './pq.rb'
+require 'os'
 
 module Astar
 
@@ -55,11 +56,15 @@ module Astar
     puts
     puts 'start: ' + start_str
     puts
+    t1 = Time.now
 
     while true
       solution, cost_limit = self.depth_limited_search(path_so_far, cost_limit)
 
       if solution != :none
+        t2 = Time.now
+        memory_used = OS.rss_bytes
+        time_taken = t2 - t1
         puts 'COMPLETE'
         puts '====================================================='
         print 'solution: '
@@ -67,6 +72,9 @@ module Astar
         puts
         puts 'steps: ' + (solution.length - 1).to_s
         puts 'nodes examined: ' + @@nodes_examined.to_s
+        puts 'memory used: ' + memory_used.to_s
+        puts 'time taken: ' + time_taken.to_s
+        self.record_stats(start_str, Node.get_human_directions(solution), solution.length-1, time_taken, memory_used, @@nodes_examined)
         return solution
       elsif cost_limit == Float::INFINITY
         puts 'No solution found'
@@ -104,6 +112,12 @@ module Astar
     end
 
     return :none, next_cost_limit
+  end
+
+  def self.record_stats(start_state, solution, depth, time_taken, memory_used, nodes_examined)
+   CSV.open("stats.csv", "ab") do |csv|
+      csv << [Time.now, start_state, solution, depth, time_taken, memory_used, nodes_examined]
+   end  
   end
 
 end

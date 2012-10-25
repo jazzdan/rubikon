@@ -6,6 +6,10 @@ class Node
     nodes.map {|x| x.direction}
   end
 
+  def self.get_human_directions nodes
+    nodes.reverse.map {|x| x.direction}.join(' ')
+  end
+
   def children
     if @children.nil?
       getChildren()

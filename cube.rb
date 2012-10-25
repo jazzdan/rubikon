@@ -222,7 +222,10 @@ module Cube
   end
 
   def self.random_state(state, depth=0)
+    puts 'Depth: ' + depth.to_s
+    state = '' + state
     if depth == 0
+      puts 'derp'
       depth = Random.rand(0..19)
     end
 
