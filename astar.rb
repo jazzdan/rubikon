@@ -94,7 +94,7 @@ module Astar
     minimum_cost = node.h
 
     if minimum_cost > cost_limit
-      return :none, minimum_cost
+      return :none, cost_limit
     elsif node.state == Cube::GOAL
       return path_so_far, cost_limit
     end
