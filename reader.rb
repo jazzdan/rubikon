@@ -1,6 +1,6 @@
 require './cube.rb'
 require './encoder.rb'
-require './solver.rb'
+require './astar.rb'
 
 file_name = ARGV.first #We only care about the first argument
 state = ""
@@ -10,4 +10,4 @@ File.open(file_name, "r") do |infile|
   end
 end
 
-Solver.solve state
+Astar.search2(state)
