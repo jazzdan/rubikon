@@ -10,4 +10,8 @@ File.open(file_name, "r") do |infile|
   end
 end
 
-Astar.search2(state)
+if CornerEncoder.encode?(state) and EdgeEncoder.encodeA?(state) and EdgeEncoder.encodeB?(state)
+  Astar.search(state)
+else
+  puts 'invalid cube'
+end
