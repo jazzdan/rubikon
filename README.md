@@ -47,6 +47,9 @@ Prerequisites
 
 Cube File Format
 ----------------
+Interally cubes are unfolded into flat, two-dimensional structures. 
+These structrures are seperated into different lines when reading in 
+from a file for ease of writing the states.
 Cubes can be passed into the reader.rb script to specify states to solve
 for. For example, the goal state look like this:
 
