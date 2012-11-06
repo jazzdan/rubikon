@@ -84,7 +84,7 @@ WWGOGBRGB
 
 To solve a cube from a file, just run:
 
-`jruby -J-Xmx4096m reader.rb ~/Downloads/ten_sample_states/cube9'
+`jruby -J-Xmx4096m reader.rb ~/Downloads/ten_sample_states/cube9`
 
 Contributors
 ============
